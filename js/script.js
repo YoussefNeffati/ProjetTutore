@@ -1,9 +1,11 @@
-var canvas, ctx, width, height;
-var char1;
-var mousepos = { x: 0, y: 0 };
-var inputStates = {};
-var painting = false, previousMousePos;
-var raf;
+let canvas,canvasShadow, canvasContextShadow, ctx, width, height;
+
+let char1;
+let mousepos = { x: 0, y: 0 };
+let inputStates = {};
+let painting = false, previousMousePos;
+let raf;
+let Points = []; //The points are stored in a object array {x,y}
 
 window.onload = init;
 
@@ -11,6 +13,8 @@ function init() {
     
     canvas = document.querySelector("#myCanvas");
     ctx = canvas.getContext('2d');
+    canvasShadow = canvas.cloneNode();
+    canvasContextShadow = canvasShadow.getContext("2d");
     width = canvas.width;
     height = canvas.height;
   
@@ -20,32 +24,13 @@ function init() {
 
     painting = false;
 
-    canvas.addEventListener('mousemove', handleMouseMove, false);
-    canvas.addEventListener('mousedown', clicked);
-    canvas.addEventListener('mouseup', released);
+    canvas.addEventListener("click", clicked);
 
-    window.addEventListener('click', function (evt) {
-        // on passe le temps en parametres, en millisecondes
-        char1.addBullet(Date.now()); 
-      
-        // NOTE : si tu n'utilises pas inputStates.MOUSEDOWN
-        // ici, mais juste l'évébement click au lieu de mousedown
-        // tu ne pourras pas tirer plus vite, il te faudra
-        // marteler le bouton.
-        // compare en gardant space appuyé avec la cadence de
-        // tir à zero.
-    });
+  Redraw();
   
-  window.addEventListener('keydown', function(evt) {
-    inputStates.SPACE = true;
-  });
-  
-  window.addEventListener('keyup', function(evt) {
+
     
-    inputStates.SPACE = false;
-  });
 
-    anime();
     
 }
 
@@ -58,15 +43,11 @@ function anime() {
     // 2) On dessine et on déplace le char 1
      char1.draw(ctx);
      char1.move(mousepos);
-  
-    if(inputStates.SPACE) {
-      char1.addBullet(Date.now()); 
-    }
-  
+     
     
     // On demande une nouvelle frame d'animation
-    window.requestAnimationFrame(anime);
-  
+    window.requestAnimationFrame(handleMouseMove);
+    
 }
 
 

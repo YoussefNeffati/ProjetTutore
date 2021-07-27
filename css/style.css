@@ -7,3 +7,14 @@ canvas {
     bottom: 0px; 
     margin: auto;
   }
+  
+  
+  
+  @keyframes move {
+    0% {
+      offset-distance: 0%;
+    }
+    100% {
+      offset-distance: 100%;
+    }
+  }
