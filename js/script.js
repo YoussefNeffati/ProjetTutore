@@ -6,6 +6,8 @@ let inputStates = {};
 let painting = false, previousMousePos;
 let raf;
 let Points = []; //The points are stored in a object array {x,y}
+let dessiner = false;
+let strokes = [];
 
 window.onload = init;
 
@@ -25,13 +27,10 @@ function init() {
     painting = false;
 
     canvas.addEventListener("click", clicked);
-
-  Redraw();
-  
-
+    canvas.addEventListener('mousemove', handleMouseMove);
     
-
     
+    Dessiner();
 }
 
 function anime() {
@@ -46,8 +45,9 @@ function anime() {
      
     
     // On demande une nouvelle frame d'animation
-    window.requestAnimationFrame(handleMouseMove);
-    
+    window.requestAnimationFrame(anime);
+
+   
 }
 
 
