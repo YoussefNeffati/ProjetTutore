@@ -26,6 +26,7 @@ class Char {
 
   }
   
+  
   drawBullets(ctx) {
     for(let i = 0; i < this.bullets.length; i++) {
       let b = this.bullets[i];
