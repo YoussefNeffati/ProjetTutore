@@ -8,15 +8,6 @@ function Redraw(){
      ctx.lineWidth = 2;
      ctx.arc(point.x, point.y, 4, 0, 2 * Math.PI);
      ctx.fill();
-          // Connects the current point to the next
-        //   if(index == 0) 
-        //      ctx.moveTo(point.x, point.y);
-
-        //   if(index != arr.length -1) 
-        //      ctx.lineTo(arr[index + 1].x, arr[index + 1].y);
-          
-         
-     
   });
 }
 
@@ -29,11 +20,7 @@ function clicked(evt) {
     Redraw();
     
  }
-
-function distance(x1, y1, x2, y2) {
-    return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-}
-
+ 
 
 function getMousePos(canvas, evt) {
     // necessary to take into account CSS boudaries
@@ -45,30 +32,8 @@ function getMousePos(canvas, evt) {
 }
 
 
-function drawLineImmediate(x1, y1, x2, y2) {
-    // a line is a path with a single draw order
-    // we need to do that in this example otherwise
-    // at each mouse event we would draw the whole path
-    // since the beginning. Remember that lines
-    // normally are only usable in path mode
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-    
-}
-
 function handleMouseMove(evt) {
     mousepos = getMousePos(canvas, evt);
-
-    // Let's draw some lines that follow the mouse pos
-    // if (painting) {
-    //     drawLineImmediate(previousMousePos.x, previousMousePos.y,
-    //             mousepos.x, mousepos.y);
-
-    //     previousMousePos = mousepos;
-    // }
-
 }
 
 
@@ -89,25 +54,12 @@ function Dessiner() {
     //ctx.beginPath();                        // clear path
 
      for(let i = 0, p; p = arr[i]; i++) { // draw points as fixed-size circles
-       let x = p.x,                // normalized to absolute values
-           y = p.y;
-      
-     ctx.beginPath();
-     ctx.arc(p.x, p.y, 4, 0, 2 * Math.PI);
-     ctx.fill();
-
-    //   if(i != arr.length -1)  
-    //     ctx.lineTo(arr[i + 1].x, arr[i + 1].y);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 4, 0, 2 * Math.PI);
+      ctx.fill();
      }
-
-    // ctx.closePath();
-    // ctx.stroke();
-
-    curve(arr, 1.2);
-}
-
-function Clear() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+     
+     curve(arr, 1.2);
 }
 
 
@@ -134,17 +86,6 @@ function SaveDessin() {
     
     Points = [];
     
-  }
-  
-  function ResetCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(canvasShadow, 0, 0);
-  }
-
-  function setPosition(e) {
-    var rect = canvas.getBoundingClientRect();
-    pos.x = e.clientX - rect.left;
-    pos.y = e.clientY - rect.top;
   }
 
   function curve(points, tension) {
@@ -177,7 +118,8 @@ function draw(sliderValue) {
     }
   
     // draw the tracking rectangle
-    
+    let xy;
+
     let arr = strokes[select.selectedIndex];
   
     for (let i = 0; i < arr.length - 1; i++) {
@@ -194,6 +136,7 @@ function draw(sliderValue) {
     
     if (sliderValue < 25) {
         var percent = sliderValue / 24;
+        
       xy = getCubicBezierXYatPercent({
         x: p1.x,
         y: p1.y
@@ -207,6 +150,7 @@ function draw(sliderValue) {
         x: p2.x,
         y: p2.y
       }, percent);
+
     } 
     
     else if (sliderValue < 50) {
@@ -260,10 +204,9 @@ function draw(sliderValue) {
       }, percent);
     }
 
-    
     drawDot(xy, "red");
-}
   }
+}
   
   
   // draw tracking rect at xy

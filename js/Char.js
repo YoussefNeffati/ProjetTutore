@@ -39,7 +39,7 @@ class Char {
   }
   
   move(mousepos) {
-        // 2) On dÃ©place la balle 
+        // 2) On déplace la balle 
     let dx = this.x - mousepos.x;
     let dy = this.y - mousepos.y;
     this.angle = Math.atan2(dy, dx);

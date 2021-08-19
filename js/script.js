@@ -2,14 +2,11 @@ let canvas,canvasShadow, canvasContextShadow, ctx, width, height;
 
 let char1;
 let mousepos = { x: 0, y: 0 };
-let inputStates = {};
-let painting = false, previousMousePos;
-let raf;
+let previousMousePos;
 let Points = []; //The points are stored in a object array {x,y}
-let dessiner = false;
 let strokes = [];
 let select;
-let xy;
+
 let fps;
 let percent;
 let direction;
@@ -20,14 +17,9 @@ function init() {
     
     canvas = document.querySelector("#myCanvas");
     ctx = canvas.getContext('2d');
-    canvasShadow = canvas.cloneNode();
-    canvasContextShadow = canvasShadow.getContext("2d");
     width = canvas.width;
     height = canvas.height;
     select = document.getElementById('selectDessin');
-
-    // set starting values
-    fps = 60;
     percent = 0
     direction = 1;
 
@@ -54,16 +46,14 @@ function animate() {
       direction = 1;
   };
   if (percent > 100) {
-      percent = 100;
-      direction = -1;
+      percent = 0;
   };
 
   draw(percent);
 
   // request another frame
-  setTimeout(function () {
-      requestAnimationFrame(animate);
-  }, 1000 / fps);
+  
+    requestAnimationFrame(animate);
 }
 
 
