@@ -1,14 +1,30 @@
 canvas {
+    background-image:    url(/images/bg.png);
     border: 2px solid black;
-    position: absolute; 
-    top: 0px; 
-    left: 0px; 
-    right: 0px; 
-    bottom: 0px; 
-    margin: auto;
+    background-size: contain;
+    margin-bottom:5%;
   }
   
+  .button {
+    background-color: #2759a8; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  .button:hover {
+    background-color: #133950
+  }
   
+  .button:active {
+    background-color: #2759a8;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
   
   @keyframes move {
     0% {

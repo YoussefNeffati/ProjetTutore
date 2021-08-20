@@ -10,6 +10,7 @@ let select;
 let fps;
 let percent;
 let direction;
+let anime = false;
 
 window.onload = init;
 
@@ -22,7 +23,8 @@ function init() {
     select = document.getElementById('selectDessin');
     percent = 0
     direction = 1;
-
+   
+    
     
     // dernier param = temps min entre tirs consecutifs. Mettre à 0 pour cadence max
     // 500 = 2 tirs max par seconde, 100 = 10 tirs/seconde
@@ -33,8 +35,9 @@ function init() {
     canvas.addEventListener("click", clicked);
     canvas.addEventListener('mousemove', handleMouseMove);
     
-    animate();
     
+    //animate();
+       
 }
 
 function animate() {
@@ -52,8 +55,8 @@ function animate() {
   draw(percent);
 
   // request another frame
-  
-    requestAnimationFrame(animate);
+  requestAnimationFrame(animate);
+    
 }
 
 

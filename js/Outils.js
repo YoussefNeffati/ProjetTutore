@@ -1,11 +1,11 @@
 function Redraw(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-
+  
     Points.forEach((point, index, arr) => {
      // This is what adds the dots on the canvas
      ctx.beginPath();
      ctx.lineWidth = 2;
+     ctx.fillStyle = "white";
      ctx.arc(point.x, point.y, 4, 0, 2 * Math.PI);
      ctx.fill();
   });
@@ -88,6 +88,12 @@ function SaveDessin() {
     
   }
 
+  function Clear() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    cancelAnimationFrame(animate);
+}
+
+
   function curve(points, tension) {
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
@@ -104,7 +110,7 @@ function SaveDessin() {
 
         let cp2x = p2.x - (p3.x - p1.x) / 6 * t;
         let cp2y = p2.y - (p3.y - p1.y) / 6 * t;
-
+        ctx.strokeStyle = "white";
         ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, p2.x, p2.y);
     }
     ctx.stroke();
@@ -230,6 +236,7 @@ function draw(sliderValue) {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+    
   }
 
 function getQuadraticBezierXYatPercent(startPt, controlPt, endPt, percent) {
