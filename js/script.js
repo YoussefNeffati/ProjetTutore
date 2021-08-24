@@ -1,4 +1,4 @@
-let canvas,canvasShadow, canvasContextShadow, ctx, width, height;
+let canvas, shipCanvas, canvasShadow, canvasContextShadow, ctx, width, height;
 
 let char1;
 let mousepos = { x: 0, y: 0 };
@@ -6,56 +6,58 @@ let previousMousePos;
 let Points = []; //The points are stored in a object array {x,y}
 let strokes = [];
 let select;
-
+var numImages = 5;
+var numLoaded = 0;
 let fps;
 let percent;
 let direction;
-let anime = false;
+var keys = [];
+var bullets = [];
+var settings;
+let xy;
 
 window.onload = init;
 
 function init() {
-    
+
     canvas = document.querySelector("#myCanvas");
     ctx = canvas.getContext('2d');
     width = canvas.width;
     height = canvas.height;
     select = document.getElementById('selectDessin');
-    percent = 0
-    direction = 1;
-   
     
+    alien = document.createElement("img");
+    alien.src = "/images/alien0.png";
+    vaisseau = document.createElement("img2");
+    vaisseau.src = "/images/alien1.png";
     
-    // dernier param = temps min entre tirs consecutifs. Mettre à 0 pour cadence max
-    // 500 = 2 tirs max par seconde, 100 = 10 tirs/seconde
-    char1 = new Char(100, 100, 0, 1, 100);
+    percent = 0;
+    
+    alien1 = new Alien();
+    joueur1 = new Joueur();
 
-    painting = false;
+    let ecouteurs = new Ecouteurs(joueur1);
+    
+    joueur1.draw();
+    animate();
 
-    canvas.addEventListener("click", clicked);
-    canvas.addEventListener('mousemove', handleMouseMove);
-    
-    
-    //animate();
-       
 }
 
 function animate() {
 
-  // set the animation position (0-100)
-  percent += direction;
-  if (percent < 0) {
-      percent = 0;
-      direction = 1;
-  };
-  if (percent > 100) {
-      percent = 0;
-  };
-
-  draw(percent);
-
-  // request another frame
-  requestAnimationFrame(animate);
+    let anime;
+    // set the animation position (0-100)
+    percent += 0.5;
+    
+    if (percent > 100) {
+        percent = 0;
+    };
+    
+    draw(percent);
+    
+    joueur1.move();
+    
+    IDanimation = requestAnimationFrame(animate);
     
 }
 

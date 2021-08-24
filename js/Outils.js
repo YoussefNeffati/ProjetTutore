@@ -1,4 +1,4 @@
-function Redraw(){
+function DessinePoints(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   
     Points.forEach((point, index, arr) => {
@@ -13,11 +13,10 @@ function Redraw(){
 
 function clicked(evt) {
     previousMousePos = getMousePos(canvas, evt);
-    painting = true;
 
     Points.push({x:previousMousePos.x, y:previousMousePos.y});
   
-    Redraw();
+    DessinePoints();
     
  }
  
@@ -82,15 +81,20 @@ function SaveDessin() {
     opt.innerHTML = "Dessin : " + (index+1);  
     select.appendChild(opt);
 
+    select.selectedIndex = index;
     index = index + 1;
     
     Points = [];
+
+    
     
   }
 
   function Clear() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    cancelAnimationFrame(animate);
+    cancelAnimationFrame(IDanimation);
+      IDanimation=0;
+      document.getElementById("toggle").innerHTML="Relancer l'animation";
 }
 
 
@@ -116,6 +120,18 @@ function SaveDessin() {
     ctx.stroke();
 }
 
+function toggleAnimation() {
+  console.log(IDanimation)
+  if (IDanimation==0) { // Animation stoppée : on la relance
+      animate();
+      document.getElementById("toggle").innerHTML="Arrêter l'animation";
+  } else {  // Arrêt de l'animation
+      cancelAnimationFrame(IDanimation);
+      IDanimation=0;
+      document.getElementById("toggle").innerHTML="Relancer l'animation";
+  }
+}
+
 function draw(sliderValue) {
 
     // redraw path
@@ -123,11 +139,15 @@ function draw(sliderValue) {
         return null;
     }
   
-    // draw the tracking rectangle
-    let xy;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
 
+    // draw the tracking rectangle
     let arr = strokes[select.selectedIndex];
   
+    curve(arr, 1.2);
+
+    
     for (let i = 0; i < arr.length - 1; i++) {
         let p0 = (i > 0) ? arr[i - 1] : arr[0];
         let p1 = arr[i];
@@ -195,22 +215,13 @@ function draw(sliderValue) {
     
     else {
         var percent=(sliderValue-75)/25
-        xy = getCubicBezierXYatPercent({
-        x: p1.x,
-        y: p1.y
-      }, {
-        x: cp1x,
-        y: cp1y
-      }, {
-        x: cp2x,
-        y: cp2y
-      }, {
-        x: p2.x,
-        y: p2.y
-      }, percent);
+        xy = getCubicBezierXYatPercent({x: p1.x,y: p1.y},{x: cp1x, y: cp1y}, {x: cp2x, y: cp2y}, {x: p2.x, y: p2.y}, percent);
     }
 
-    drawDot(xy, "red");
+    alien1.draw(xy);
+    //drawDot(xy, "red");
+    //alien.draw(xy);
+    
   }
 }
   
@@ -236,6 +247,7 @@ function draw(sliderValue) {
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
+    
     
   }
 
