@@ -1,5 +1,5 @@
 function Ship() {
-  this.s = 50;
+  this.s = 40;
   this.v = 5;
   this.x = (width / 2) - (this.s / 2);
   this.y = height - (this.s * 1.75);

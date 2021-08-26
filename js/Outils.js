@@ -1,8 +1,12 @@
+
+//Cette Fonction est utilisé lors ce que clicked et utilisé
+//elle permet de redessiner tous les points qu'on a cliqué
 function DessinePoints(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-    Points.forEach((point, index, arr) => {
-     // This is what adds the dots on the canvas
+    ctrl.Points.forEach((point, index, arr) => {
+
+     // Pour chaque points du tableau Points on les redessine sur le Canva
      ctx.beginPath();
      ctx.lineWidth = 2;
      ctx.fillStyle = "white";
@@ -14,7 +18,7 @@ function DessinePoints(){
 function clicked(evt) {
     previousMousePos = getMousePos(canvas, evt);
 
-    Points.push({x:previousMousePos.x, y:previousMousePos.y});
+    ctrl.Points.push({x:previousMousePos.x, y:previousMousePos.y});
   
     DessinePoints();
     
@@ -37,17 +41,13 @@ function handleMouseMove(evt) {
 
 
 
-function released(evt) {
-    previousMousePos = getMousePos(canvas, evt);
-    painting = false;
-}
 
 function Dessiner() {
-    if(strokes.length == 0){
+    if(ctrl.strokes.length == 0){
         return null;
     }
 
-    let arr = strokes[select.selectedIndex];
+    let arr = ctrl.strokes[select.selectedIndex];
     
     ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
     //ctx.beginPath();                        // clear path
@@ -63,28 +63,28 @@ function Dessiner() {
 
 
 function SaveDessin() {
-    if(Points.length == 0){
+    if(ctrl.Points.length == 0){
         return null;
     }
 
-    curve(Points, 1.2)
+    curve(ctrl.Points, 1.2)
 
-    strokes.push([]);
-    index = strokes.length - 1;
+    ctrl.strokes.push([]);
+    index = ctrl.strokes.length - 1;
 
-    for(let i = 0, p; p = Points[i]; i++) {
-        strokes[index].push({x:Points[i].x, y:Points[i].y});
+    for(let i = 0, p; p = ctrl.Points[i]; i++) {
+      ctrl.strokes[index].push({x:ctrl.Points[i].x, y:ctrl.Points[i].y});
     }
 
     let opt = document.createElement('option');
-    opt.value = strokes[index];
+    opt.value = ctrl.strokes[index];
     opt.innerHTML = "Dessin : " + (index+1);  
     select.appendChild(opt);
 
     select.selectedIndex = index;
     index = index + 1;
     
-    Points = [];
+    ctrl.Points = [];
 
     
     
@@ -92,8 +92,9 @@ function SaveDessin() {
 
   function Clear() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    cancelAnimationFrame(IDanimation);
-      IDanimation=0;
+    ctrl.Points = [];
+    cancelAnimationFrame(cvs.IDanimation);
+    cvs.IDanimation=0;
       document.getElementById("toggle").innerHTML="Relancer l'animation";
 }
 
@@ -121,13 +122,13 @@ function SaveDessin() {
 }
 
 function toggleAnimation() {
-  console.log(IDanimation)
-  if (IDanimation==0) { // Animation stoppée : on la relance
-      animate();
+  console.log(cvs.IDanimation)
+  if (cvs.IDanimation==0) { // Animation stoppée : on la relance
+      cvs.boucleAnimation();
       document.getElementById("toggle").innerHTML="Arrêter l'animation";
   } else {  // Arrêt de l'animation
-      cancelAnimationFrame(IDanimation);
-      IDanimation=0;
+      cancelAnimationFrame(cvs.IDanimation);
+      cvs.IDanimation=0;
       document.getElementById("toggle").innerHTML="Relancer l'animation";
   }
 }
@@ -135,7 +136,7 @@ function toggleAnimation() {
 function draw(sliderValue) {
 
     // redraw path
-    if(strokes.length == 0){
+    if(ctrl.strokes.length == 0){
         return null;
     }
   
@@ -143,7 +144,7 @@ function draw(sliderValue) {
     
 
     // draw the tracking rectangle
-    let arr = strokes[select.selectedIndex];
+    let arr = ctrl.strokes[select.selectedIndex];
   
     curve(arr, 1.2);
 
@@ -218,38 +219,32 @@ function draw(sliderValue) {
         xy = getCubicBezierXYatPercent({x: p1.x,y: p1.y},{x: cp1x, y: cp1y}, {x: cp2x, y: cp2y}, {x: p2.x, y: p2.y}, percent);
     }
 
-    alien1.draw(xy);
+    cvs.drawAlien(xy);
+    //ctrl.getAlien().draw(xy);
     //drawDot(xy, "red");
     //alien.draw(xy);
     
   }
 }
   
-  
-  // draw tracking rect at xy
-  function drawRect(point, color) {
-    ctx.fillStyle = "cyan";
-    ctx.strokeStyle = "gray";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.rect(point.x - 13, point.y - 8, 25, 15);
-    ctx.fill();
-    ctx.stroke();
+function preload() {
+  this.imgs.push(loadImage('images/ship.png'));
+  this.imgs.push(loadImage('images/alien0.png'));
+  this.imgs.push(loadImage('images/alien1.png'));
+  this.imgs.push(loadImage('images/alien2.png'));
+}
+
+function keyPressed() {
+  if (keyIsPressed) {
+    keys.push(key);
   }
-  
-  // draw tracking dot at xy
-  function drawDot(point, color) {
-    ctx.fillStyle = color;
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.arc(point.x, point.y, 8, 0, Math.PI * 2, false);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-    
-    
+}
+
+function keyReleased() {
+  for (var i = 0; i < keys.length; i++) {
+    keys.splice(key[i], 1);
   }
+}
 
 function getQuadraticBezierXYatPercent(startPt, controlPt, endPt, percent) {
     var x = Math.pow(1 - percent, 2) * startPt.x + 2 * (1 - percent) * percent * controlPt.x + Math.pow(percent, 2) * endPt.x;

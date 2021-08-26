@@ -7,11 +7,13 @@ class Ecouteurs {
 
     initEcouteurs() {
 
+        let canvas = document.getElementById("myCanvas");
+        
         canvas.addEventListener("click", clicked);
         canvas.addEventListener('mousemove', handleMouseMove);
 
         //On crée l'écouteur de la touche enfoncée pour modifier la trajectoire du joueur
-        document.addEventListener("keydown", (evt) => {
+        document.addEventListener("keydown", (evt) =>{
             switch (evt.key) {
                 case "ArrowRight":
                     this.joueur.vx = 5;
