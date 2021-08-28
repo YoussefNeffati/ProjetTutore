@@ -1,23 +1,43 @@
+@font-face {
+  font-family: "Press Start 2P";
+  src:url("/Assets/PressStart2P-Regular.ttf");
+}
+
 canvas {
-    background-image:    url(/images/bg.png);
+    background-image:    url(/Assets/images/bg.png);
     border: 1px solid #2759a8;
     background-size: contain;
     margin-bottom:5%;
     position: absolute; top: 100px; left: 300px;
   }
+
   body {
-    background-color: lightblue;
+    background-color: lightgray;
   }
 
   h1 {
-    color: #000000;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    -webkit-text-stroke: 2px red;
+    position: absolute; top: 10px; left: 450px;
+    color: black;
+    font-family: 'Press Start 2P', cursive;
     font-size: 35px;
-    text-align: center
+    text-align: center;
     
 }
 
+h2 { 
+  position: absolute; bottom: 10px; left: 500px;
+  color: black;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 20px;
+  text-align: center;
+  
+}
+
   .button {
+    position: relative;
+    top: 100px;
+    left: 100px;
     background-color: #2759a8; /* Green */
     border: none;
     color: white;
@@ -27,16 +47,50 @@ canvas {
     display: block;
     font-size: 16px;
     border-radius: 4px;
-    margin-bottom:10px;
+    margin-bottom:95px;
     
   }
   .button:hover {
     background-color: #133950
   }
   
+  .button:disabled {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
   .button:active {
     background-color: #2759a8;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
   
+#Jouer {
+  
+    bottom: 275px;
+    left: 370px;
+    position: absolute;
+    width: 23%;
+    height: 11%;
+    font-size: 28px;
+    background-color: #ff1004!important;
+}
+#shadow {
+  left: 300px;
+    bottom: 90px;
+    position: absolute;
+    width: 900px;
+    height: 600px;
+    background-color: #000000a1;
+}
+#score
+{
+    position: absolute;
+    top: 110px;
+    left: 310px;
+    z-index: 100;
+    color: crimson;
+    font-size: 15px;
+    font-family: 'Press Start 2P', cursive;
+}

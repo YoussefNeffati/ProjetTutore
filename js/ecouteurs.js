@@ -2,6 +2,7 @@ class Ecouteurs {
 
     constructor(joueur){
         this.joueur = joueur;
+        this.inputStates = {}; // =True tant que la barre Espace est appuyé
         this.initEcouteurs();
     }
 
@@ -28,15 +29,18 @@ class Ecouteurs {
                     this.joueur.vy = -5;
                     break;
             }
-        });
-        document.addEventListener("keydown", (evt) => {
-            let keyCode = evt.key;
-            if (keyCode >= 37 && keyCode <= 40) {
-                return false;
+            if (evt.code === "Space") {
+                this.inputStates.SPACE = true;
             }
+            
         });
+        
         //On arrête le joueur si on relève la touche
-        document.addEventListener("keyup", () => {
+        document.addEventListener("keyup", (evt) => {
+            
+            if (evt.code === "Space") {
+                this.inputStates.SPACE = false;
+            }
             this.joueur.vx = 0;
             this.joueur.vy = 0;
         });
