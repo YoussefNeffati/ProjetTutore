@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<script src="js/script.js"></script>
+<script src="js/Outils.js"></script>
+<script src="js/Bullet.js"></script>
+<script src="js/alien.js"></script>
+<script src="js/joueur.js"></script>
+<script src="js/ecouteurs.js"></script>
+<script src="js/controleur.js"></script>
+<script src="js/Canvas.js"></script>
+
+
+
+</head>
+<body >
+  <h1>GALAXIAN TYPE GAME</h1>
+  <h2>Réalisé par Neffati Youssef </h2>
+  <canvas id="myCanvas" width="900" height="600"></canvas>
+  <button onclick="SaveDessin()" class="button button3">Enregistrer</button>
+  <button class="button button4" onclick="toggleAnimation()" id="toggle">Mode Editeur</button>
+  <button  onclick="ReDessiner()" class="button button1">Redessiner </button>
+  <button onclick="Clear()" class="button button2">Effacer</button>
+  <select id="selectDessin" class="button button1"></select>
+  <div id="shadow"><button onclick="location.reload();" id="Jouer" class="red_button btn btn-danger shadow-none">Rejouer</button></div>
+  <div id= "score"></div> 
+</body>
+</html>
+

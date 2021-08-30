@@ -1,0 +1,42 @@
+canvas {
+    background-image:    url(/images/bg.png);
+    border: 1px solid #2759a8;
+    background-size: contain;
+    margin-bottom:5%;
+    position: absolute; top: 100px; left: 300px;
+  }
+  body {
+    background-color: lightblue;
+  }
+
+  h1 {
+    color: #000000;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 35px;
+    text-align: center
+    
+}
+
+  .button {
+    background-color: #2759a8; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    border-radius: 4px;
+    margin-bottom:10px;
+    
+  }
+  .button:hover {
+    background-color: #133950
+  }
+  
+  .button:active {
+    background-color: #2759a8;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+  
