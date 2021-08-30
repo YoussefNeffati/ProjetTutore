@@ -1,17 +1,12 @@
 function clicked(evt) {
-
+  
   previousMousePos = ctrl.getMousePos(cvs.canvas, evt);
 
   ctrl.TabPoints.push({ x: previousMousePos.x, y: previousMousePos.y });
 
   cvs.DessinePoints();
-
+  
 }
-
-function handleMouseMove(evt) {
-  mousepos = ctrl.getMousePos(cvs.canvas, evt);
-}
-
 
 
 
@@ -67,20 +62,21 @@ function SaveDessin() {
 function Clear() {
   cvs.ctx.clearRect(0, 0, cvs.width, cvs.height);
   ctrl.TabPoints = [];
-  cancelAnimationFrame(cvs.IDanimation);
-  cvs.IDanimation = 0;
+  cancelAnimationFrame(cvs.animation);
+  cvs.animation = 0;
   document.getElementById("toggle").disabled = true;
   document.getElementById("toggle").innerHTML = "Reprendre le jeu";
 }
 
 //source : https://www.toutjavascript.com/reference/ref-window.requestanimationframe.php
 function toggleAnimation() {
-  if (cvs.IDanimation == 0) { // Animation stoppée : on la relance
+  if (cvs.animation == 0) { // Animation stoppée : on la relance
     cvs.boucleAnimation();
     document.getElementById("toggle").innerHTML = "Mode Editeur";
   } else {  // Arrêt de l'animation
-    cancelAnimationFrame(cvs.IDanimation);
-    cvs.IDanimation = 0;
+    cancelAnimationFrame(cvs.animation);
+    cvs.animation = 0;
+    Clear();
     document.getElementById("toggle").innerHTML = "Reprendre le jeu";
   }
 }

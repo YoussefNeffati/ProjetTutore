@@ -18,7 +18,6 @@ class Canvas {
         this.score = 0;
         this.percent = 0;
         this.bullets = [];
-        this.IDanimation;
         this.init();
     }
 
@@ -81,18 +80,17 @@ class Canvas {
         if(this.ecouteurs.inputStates.SPACE) {
             this.ctrl.addBullet(Date.now());
         }
-        
+
         if (this.ctrl.checkCollisionsJoueur()) {
             document.getElementById('shadow').style.visibility = 'visible';
             document.getElementById('Jouer').style.visibility = 'visible';
             cancelAnimationFrame(this.animation);
         } else {
-            this.IDanimation = requestAnimationFrame(this.boucleAnimation.bind(this));
+            this.animation = requestAnimationFrame(this.boucleAnimation.bind(this));
         }
     }
 
     DessinePoints() {
-        this.ctx.clearRect(0, 0, this.width, this.height);
 
         this.ctrl.TabPoints.forEach((point, index, arr) => {
 

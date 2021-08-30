@@ -6,7 +6,6 @@ class controleur {
         this.canvas = null;
         this.TabPoints = []; //Tableau des points sur le canvas
         this.TabDessins = []; //Tableau Multidimensionnel contenant les points des courbes à chaque index. 
-        this.mousepos = { x: 0, y: 0 };
         this.previousMousePos;
     }
 
@@ -72,6 +71,7 @@ class controleur {
                 this.alien.y - this.alien.l < bullet.y + bullet.h && this.alien.y + this.alien.l > bullet.y) {
                 // si les objets se touchent
                 this.canvas.score += 1;
+                collisions = true;
             }
         });
 
